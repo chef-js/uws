@@ -38,7 +38,7 @@
 
     <script type="text/javascript" src="./client.js"></script>
     <script type="text/javascript">
-      const socket = new UWebSocket("ws://localhost:4200");
+      const socket = new UWebSocket(location.origin.replace(/^http/, 'ws'));
       const refs = getHTMLElements();
 
       socket.on("/join", ({ id, event, data }) => {

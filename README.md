@@ -12,6 +12,8 @@ designed for **node** written in **typescript**, with **tests**
 
 ## Minimal Chat Demo
 
+https://chef-js-uws.herokuapp.com/
+
 ```bash
 $ yarn add chef-uws
 $ yarn chef-uws node_modules/chef-uws/demo --plugin node_modules/chef-core/chat.js
