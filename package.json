@@ -1,13 +1,14 @@
 {
   "name": "chef-uws",
-  "version": "1.0.3",
-  "description": "bouncer.js + uWebSockets.js = static files server + websockets",
+  "version": "1.0.4",
+  "description": "chef-js + uWebSockets.js = static files server + websockets",
   "main": "index.js",
   "bin": {
     "chef-socket": "./bin/chef-uws"
   },
   "scripts": {
-    "build": "tsc"
+    "build": "tsc",
+    "test": "jest"
   },
   "repository": "https://github.com/Prozi/chef-uws",
   "author": "Jacek Pietal <Prozi>",
@@ -19,6 +20,7 @@
   },
   "devDependencies": {
     "@types/node": "^17.0.17",
+    "jest": "^27.5.1",
     "typescript": "^4.5.5"
   }
 }
