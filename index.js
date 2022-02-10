@@ -1,4 +1,4 @@
-const { startServer } = require("@jacekpietal/bouncer.js");
+const { startServer } = require("./dist");
 
 module.exports = async function start() {
   return await startServer({
