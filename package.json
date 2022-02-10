@@ -1,12 +1,20 @@
 {
   "name": "chef-uws",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "chef-js + uWebSockets.js = static files server + websockets",
   "main": "index.js",
   "types": "./dist/index.d.ts",
   "bin": {
     "chef-socket": "./bin/chef-uws"
   },
+  "keywords": [
+    "chef-js",
+    "server",
+    "static-serve",
+    "http-server",
+    "microwebsockets",
+    "websockets"
+  ],
   "scripts": {
     "build": "tsc",
     "test": "jest"
