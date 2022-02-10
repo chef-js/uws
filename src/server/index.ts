@@ -13,7 +13,7 @@ export default async function startServer(
   populatePlugins(config);
 
   // create the express or uws server inside a wrapper
-  const server: any = await createServer();
+  const server: any = await createServer(config);
 
   // create the static files reader based on folder
   const fileReader: (url: string) => any = createFileReader(config.folder);
