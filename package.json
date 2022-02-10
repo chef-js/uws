@@ -1,6 +1,6 @@
 {
   "name": "chef-uws",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "chef-js + uWebSockets.js = static files server + websockets",
   "main": "index.js",
   "bin": {
