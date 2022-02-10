@@ -19,7 +19,7 @@
     "build": "tsc",
     "test": "jest"
   },
-  "files": ["dist", "client.js", "demo", "bin"],
+  "files": ["dist", "demo", "bin"],
   "repository": "https://github.com/chef-js/uws",
   "author": "Jacek Pietal <Prozi>",
   "license": "MIT",
