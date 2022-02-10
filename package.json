@@ -1,6 +1,6 @@
 {
   "name": "chef-uws",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "chef-js + uWebSockets.js = static files server + websockets",
   "main": "index.js",
   "bin": {
@@ -10,7 +10,7 @@
     "build": "tsc",
     "test": "jest"
   },
-  "repository": "https://github.com/Prozi/chef-uws",
+  "repository": "https://github.com/chef-js/uws",
   "author": "Jacek Pietal <Prozi>",
   "license": "MIT",
   "private": false,
