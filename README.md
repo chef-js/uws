@@ -10,6 +10,13 @@ designed for **node** written in **typescript**, with **tests**
 
 - `uWebSockets.js` for serving files and websockets
 
+## Minimal Chat Demo
+
+```bash
+$ yarn add chef-uws
+$ yarn chef-uws node_modules/chef-uws/demo --plugin node_modules/chef-core/chat.js
+```
+
 ## Running
 
 ```bash

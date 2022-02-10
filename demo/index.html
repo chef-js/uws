@@ -1,1 +1,83 @@
-200 OK
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Chat</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, user-scalable=no"
+    />
+    <style>
+      body,
+      input {
+        font-family: monospace;
+      }
+
+      img.bear {
+        width: 20%;
+        max-width: 200px;
+        float: right;
+      }
+    </style>
+  </head>
+
+  <body>
+    <img src="https://raw.githubusercontent.com/chef-js/uws/main/chef.png" class="bear" />
+
+    <h1>Chat</h1>
+
+    <p><strong>Your username:</strong> <span id="username"></span></p>
+
+    <form id="chat" autocomplete="off">
+      <input type="text" id="message" />
+      <button type="submit">send</button>
+    </form>
+
+    <p><strong>Messages:</strong></p>
+    <div id="messages"></div>
+
+    <script type="text/javascript" src="./client.js"></script>
+    <script type="text/javascript">
+      const socket = new UWebSocket("ws://localhost:4200");
+      const refs = getHTMLElements();
+
+      socket.on("/join", ({ id, event, data }) => {
+        // first join is your join, set your server named id
+        if (!refs.username.innerText) {
+          refs.username.innerText = id;
+        }
+      });
+
+      socket.onopen = (value) => {
+        // step 1 ~> 2 of flow - send handshake of plugin name
+        socket.emitEvent("/join", "chat");
+      };
+
+      socket.on("*", ({ id, event, data }) => {
+        // append output
+        refs.messages.innerHTML += `<div>${id} &gt; ${event} &gt; ${data}</div>\n`;
+      });
+
+      refs.chat.addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        const payload = refs.message.value.trim();
+        if (!payload) return;
+
+        socket.emitEvent("say", payload);
+
+        refs.message.value = "";
+      });
+
+      function getHTMLElements() {
+        return ["username", "messages", "message", "chat"].reduce(
+          (obj, id) => ({
+            ...obj,
+            [id]: document.querySelector(`#${id}`),
+          }),
+          {}
+        );
+      }
+    </script>
+  </body>
+</html>
