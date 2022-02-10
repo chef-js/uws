@@ -1,0 +1,1 @@
+{"version":3,"file":"plugin-manager.d.ts","sourceRoot":"","sources":["../src/plugin-manager.ts"],"names":[],"mappings":"AACA,OAAO,EAAE,QAAQ,EAAE,QAAQ,EAAE,MAAM,YAAY,CAAC;AAEhD,wBAAsB,eAAe,CAAC,MAAM,EAAE,QAAQ,GAAG,OAAO,CAAC,IAAI,CAAC,CAsBrE;AAED,wBAAgB,SAAS,CACvB,MAAM,EAAE,QAAQ,EAChB,KAAK,EAAE,MAAM,GACZ,QAAQ,GAAG,SAAS,CAGtB"}

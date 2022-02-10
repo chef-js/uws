@@ -1,0 +1,24 @@
+{
+  "name": "chef-uws",
+  "version": "1.0.0",
+  "description": "bouncer.js + uWebSockets.js = static files server + websockets",
+  "main": "index.js",
+  "bin": {
+    "chef-socket": "./bin/chef-uws"
+  },
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": "https://github.com/Prozi/chef-uws",
+  "author": "Jacek Pietal <Prozi>",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "mime-types": "^2.1.34",
+    "uWebSockets.js": "github:uNetworking/uWebSockets.js#v20.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.17",
+    "typescript": "^4.5.5"
+  }
+}
