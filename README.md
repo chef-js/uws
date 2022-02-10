@@ -1,8 +1,8 @@
-# chef-uws `(ノಠ益ಠ)ノ`
+# chef-uws
 
-<a href="https://badge.fury.io/js/%40jacekpietal%2Fbouncer.js"><img src="https://badge.fury.io/js/%40jacekpietal%2Fbouncer.js.svg" alt="npm package version" /></a>
-<a href="https://img.shields.io/npm/dt/@jacekpietal/bouncer.js"><img src="https://img.shields.io/npm/dt/@jacekpietal/bouncer.js" alt="downloads total" /></a>
-<a href="https://circleci.com/gh/Prozi/bouncer.js"><img src="https://circleci.com/gh/Prozi/bouncer.js.svg?style=shield" alt="tests status" /></a>
+<img style="max-width: 100%;" src="https://raw.githubusercontent.com/chef-js/express/main/chef.png" width="150" />
+
+<a href="https://badge.fury.io/js/chef-uws"><img src="https://badge.fury.io/js/chef-uws.svg" alt="npm package version" /></a> <a href="https://circleci.com/gh/chef-js/uws"><img src="https://circleci.com/gh/chef-js/uws.svg?style=shield" alt="tests status" /></a>
 
 **web-sockets** micro-service manager and **static files server** at the same port,
 
