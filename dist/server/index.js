@@ -12,7 +12,7 @@ const config_js_1 = __importDefault(require("../config.js"));
 const plugin_manager_1 = require("../plugin-manager");
 async function startServer(userConfig = {}) {
   const config = { ...config_js_1.default, ...userConfig };
-  (0, plugin_manager_1.populatePlugins)(config);
+  await (0, plugin_manager_1.populatePlugins)(config);
   // create the express or uws server inside a wrapper
   const server = await (0, microwebsockets_1.default)(config);
   // create the static files reader based on folder
@@ -21,15 +21,15 @@ async function startServer(userConfig = {}) {
   const fileReaderCache = new cache_1.default(fileReader);
   // everything goes to the reader
   server.get("/*", (res, req, next) => {
-    const url = getUrl(req.originalUrl);
+    const url = getUrl(req.getUrl());
     const { status, mime, body } = fileReaderCache.get(url);
     if (config.debug) {
       console.info(status, mime, url);
     }
-    // header sets content type
-    res.header("Content-Type", mime);
-    // write header sets status
-    res.writeHeader(status);
+    // set content type by write header
+    res.writeHeader("Content-Type", mime);
+    // string status
+    res.writeStatus(status.toString());
     res.end(body);
   });
   // finally start the server on process.env.PORT || 4200

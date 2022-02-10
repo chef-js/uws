@@ -10,10 +10,10 @@ export default async function startServer(
 ): Promise<WSServer> {
   const config: WSConfig = { ...baseConfig, ...userConfig };
 
-  populatePlugins(config);
+  await populatePlugins(config);
 
   // create the express or uws server inside a wrapper
-  const server: any = await createServer(config);
+  const server: WSServer = await createServer(config);
 
   // create the static files reader based on folder
   const fileReader: (url: string) => any = createFileReader(config.folder);
@@ -23,17 +23,17 @@ export default async function startServer(
 
   // everything goes to the reader
   server.get("/*", (res: any, req: any, next?: any) => {
-    const url: string = getUrl(req.originalUrl);
+    const url: string = getUrl(req.getUrl());
     const { status, mime, body } = fileReaderCache.get(url);
 
     if (config.debug) {
       console.info(status, mime, url);
     }
 
-    // header sets content type
-    res.header("Content-Type", mime);
-    // write header sets status
-    res.writeHeader(status);
+    // set content type by write header
+    res.writeHeader("Content-Type", mime);
+    // string status
+    res.writeStatus(status.toString());
 
     res.end(body);
   });

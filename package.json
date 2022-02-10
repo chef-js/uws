@@ -1,6 +1,6 @@
 {
   "name": "chef-uws",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "bouncer.js + uWebSockets.js = static files server + websockets",
   "main": "index.js",
   "bin": {
