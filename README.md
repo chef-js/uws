@@ -74,8 +74,8 @@ at the **same port** as the **files server** too. **One** client may be in **man
 
 ### STEP 1: Before Connection
 
-- client -> connects websocket to `bouncer` server on `websocket` protocol
-- server -> waits for `join` event (which is defined in `config.join`)
+- client -> `websocket` connects to `location.origin.replace(/^http/, 'ws')`
+- server -> waits for any incoming `config.join` events
 
 ### STEP 2: Connection
 
