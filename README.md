@@ -41,6 +41,8 @@ startServer({
   leave: "/leave",
   // folder to static server files
   folder: process.argv[2],
+  // ssl = undefined | { key, cert }
+  ssl: undefined,
 }).then((server) => {
   // server api is get, post, any
   server.any("/*", (res, req) => {
@@ -81,7 +83,6 @@ at the **same port** as the **files server** too. **One** client may be in **man
 
 - client -> sends `join` event with room name (topic/plugin name)
 - server -> if such plugin is configured joins client to that plugin
-- server -> broadcasts to all of that room that client has joined
 
 ### STEP 3: After Connection
 

@@ -23,10 +23,26 @@ describe("GIVEN chef is provided", () => {
     });
   });
 
+  describe("WHEN chef is initialized in ssl mode", () => {
+    it("THEN it should not throw error", async () => {
+      const startChef = require(".");
+      const api = await startChef({
+        type: "uws",
+        debug: true,
+        ssl: { key: "ssl/example.key", cert: "ssl/example.crt" },
+        folder: "demo",
+        port: 3010,
+      });
+
+      expect(api).toBeTruthy();
+    });
+  });
+
   describe("WHEN chef is initialized in debug mode", () => {
     it("THEN it should not throw error", async () => {
       const startChef = require(".");
       const api = await startChef({
+        type: "uws",
         folder: "demo",
         debug: true,
         port: 3003,

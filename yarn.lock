@@ -838,10 +838,10 @@ char-regex@^1.0.2:
   resolved "https://registry.yarnpkg.com/char-regex/-/char-regex-1.0.2.tgz#d744358226217f981ed58f479b1d6bcc29545dcf"
   integrity sha512-kWWXztvZ5SBQV+eRgKFeh8q5sLuZY2+8WUIzlxWVTg+oGwY14qylx1KbKzHd8P6ZYkAg0xyIDU9JMHhyJMZ1jw==
 
-chef-core@^1.0.2:
-  version "1.0.2"
-  resolved "https://registry.yarnpkg.com/chef-core/-/chef-core-1.0.2.tgz#8fe89f69e080794f2de715a00b59ebd2136cf9aa"
-  integrity sha512-b0JLGnUQaKV+BQJn5MY4hSKmFkaVaazEVT/PPSVS6g98J7TnNYQd2YdnxKDEYR6deoC02InRsj9H3ve2y6TkOw==
+chef-core@^1.0.5:
+  version "1.0.5"
+  resolved "https://registry.yarnpkg.com/chef-core/-/chef-core-1.0.5.tgz#6b1fba4d6540f22f204a2bc72546543babc864cd"
+  integrity sha512-qhvbPluJBvQCdtlxPOCcXEtP8mALrCQxGiCB/CreOBDbiBNUtj4r4CZVNEpjzMV5GxjMgFH73WZEGFEJM2/E6A==
   dependencies:
     mime-types "^2.1.34"
 
