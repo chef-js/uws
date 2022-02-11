@@ -1,6 +1,6 @@
 {
   "name": "chef-uws",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "chef-js + uWebSockets.js = static files server + websockets",
   "main": "index.js",
   "types": "./dist/index.d.ts",
@@ -13,7 +13,8 @@
     "static-serve",
     "http-server",
     "microwebsockets",
-    "websockets"
+    "websockets",
+    "spa"
   ],
   "scripts": {
     "build": "tsc",
