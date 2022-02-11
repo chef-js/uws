@@ -7,7 +7,7 @@ describe("GIVEN chef is provided", () => {
 
   describe("WHEN it is instantiated", () => {
     it("THEN it should initialize without throwing error", () => {
-      const { default: startChef } = require("./dist");
+      const startChef = require(".");
 
       expect(() =>
         startChef({ type: "uws", folder: "demo", port: 3001 })
@@ -15,7 +15,7 @@ describe("GIVEN chef is provided", () => {
     });
 
     it("THEN initialization should return a truthy instance", async () => {
-      const { default: startChef } = require("./dist");
+      const startChef = require(".");
 
       expect(
         await startChef({ type: "uws", folder: "demo", port: 3002 })
@@ -25,7 +25,7 @@ describe("GIVEN chef is provided", () => {
 
   describe("WHEN chef is initialized in debug mode", () => {
     it("THEN it should not throw error", async () => {
-      const { default: startChef } = require("./dist");
+      const startChef = require(".");
       const api = await startChef({
         folder: "demo",
         debug: true,
@@ -38,7 +38,7 @@ describe("GIVEN chef is provided", () => {
 
   describe("WHEN chef.serve is run on demo folder", () => {
     it("THEN it should not throw error", async () => {
-      const { default: startChef } = require("./dist");
+      const startChef = require(".");
       const test = async () =>
         await startChef({
           type: "uws",
@@ -53,7 +53,7 @@ describe("GIVEN chef is provided", () => {
 
   describe("WHEN chef is initialized on specified port", () => {
     it("THEN it should start without error", async () => {
-      const { default: startChef } = require("./dist");
+      const startChef = require(".");
       const server = await startChef({
         type: "uws",
         folder: "demo",
@@ -66,10 +66,11 @@ describe("GIVEN chef is provided", () => {
 
   describe("WHEN chef is initialized with plugin", () => {
     it("THEN it should start without error", (done) => {
-      const { default: startChef } = require("./dist");
+      const startChef = require(".");
       const { default: config } = require("chef-core/dist/config");
 
       startChef({
+        type: "uws",
         folder: "demo",
         port: 4200,
         plugins: {

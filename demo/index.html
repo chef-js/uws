@@ -22,7 +22,10 @@
   </head>
 
   <body>
-    <img src="https://raw.githubusercontent.com/chef-js/uws/main/chef.png" class="bear" />
+    <img
+      src="https://raw.githubusercontent.com/chef-js/uws/main/chef.png"
+      class="bear"
+    />
 
     <h1>Chat</h1>
 
@@ -38,7 +41,7 @@
 
     <script type="text/javascript" src="./client.js"></script>
     <script type="text/javascript">
-      const socket = new UWebSocket(location.origin.replace(/^http/, 'ws'));
+      const socket = new UWebSocket(location.origin.replace(/^http/, "ws"));
       const refs = getHTMLElements();
 
       socket.on("/join", ({ id, event, data }) => {

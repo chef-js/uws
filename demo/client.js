@@ -1,4 +1,4 @@
-const { WebSocket } = window
+const { WebSocket } = window;
 
 /**
  * microwebsocket - socket.io-like extension to websocket, use on front
@@ -10,17 +10,17 @@ class UWebSocket {
    * @returns {WebSocket | SocketIOClient}
    */
   constructor(serverUrl) {
-    this.allKey = '*'
+    this.allKey = "*";
     this.events = {
-      [this.allKey]: []
-    }
+      [this.allKey]: [],
+    };
 
-    this.ws = new WebSocket(serverUrl)
+    this.ws = new WebSocket(serverUrl);
     this.ws.onmessage = (message) => {
-      this.uwsOnMessage(message)
-    }
+      this.uwsOnMessage(message);
+    };
 
-    Object.freeze(this.ws.onmessage)
+    Object.freeze(this.ws.onmessage);
   }
 
   /**
@@ -28,14 +28,14 @@ class UWebSocket {
    * @param {string|number} id
    */
   set id(id) {
-    this.ws.id = id
+    this.ws.id = id;
   }
 
   /**
    * Gets ws id
    */
   get id() {
-    return this.ws.id
+    return this.ws.id;
   }
 
   /**
@@ -43,7 +43,7 @@ class UWebSocket {
    * @param {function} callback
    */
   set onopen(callback) {
-    this.ws.onopen = callback
+    this.ws.onopen = callback;
   }
 
   /**
@@ -51,7 +51,7 @@ class UWebSocket {
    * @param {function} callback
    */
   set onclose(callback) {
-    this.ws.onclose = callback
+    this.ws.onclose = callback;
   }
 
   /**
@@ -59,7 +59,7 @@ class UWebSocket {
    * @param {function} callback
    */
   set onerror(callback) {
-    this.ws.onerror = callback
+    this.ws.onerror = callback;
   }
 
   /**
@@ -67,14 +67,14 @@ class UWebSocket {
    * @param {function} callback
    */
   set onmessage(callback) {
-    this.on(this.allKey, callback)
+    this.on(this.allKey, callback);
   }
 
   /**
    * Calls onclose on ws
    */
   close() {
-    this.ws.close()
+    this.ws.close();
   }
 
   /**
@@ -83,14 +83,14 @@ class UWebSocket {
    */
   uwsOnMessage({ data: message }) {
     const { id, event, data } =
-      typeof message === 'string' ? JSON.parse(message) : message
+      typeof message === "string" ? JSON.parse(message) : message;
 
     const events = [
       ...(this.events[event] || []),
-      ...(this.events[this.allKey] || [])
-    ]
+      ...(this.events[this.allKey] || []),
+    ];
 
-    events.forEach((action) => action({ id: id || this.ws.id, event, data }))
+    events.forEach((action) => action({ id: id || this.ws.id, event, data }));
   }
 
   /**
@@ -101,12 +101,12 @@ class UWebSocket {
   on(name, callback) {
     const done = ({ id, event, data }) => {
       if ([event, this.allKey].includes(name)) {
-        callback({ id, event, data })
+        callback({ id, event, data });
       }
-    }
+    };
 
-    this.events[name] = this.events[name] || []
-    this.events[name].push(done)
+    this.events[name] = this.events[name] || [];
+    this.events[name].push(done);
   }
 
   /**
@@ -115,10 +115,10 @@ class UWebSocket {
    */
   emit(objectOrString) {
     this.send(
-      typeof objectOrString === 'string'
+      typeof objectOrString === "string"
         ? objectOrString
         : JSON.stringify(objectOrString)
-    )
+    );
   }
 
   /**
@@ -126,7 +126,7 @@ class UWebSocket {
    * @param {any} data
    */
   emitEvent(event, data) {
-    this.emit({ event, data, id: this.id })
+    this.emit({ event, data, id: this.id });
   }
 
   /**
@@ -134,8 +134,8 @@ class UWebSocket {
    * @param {string} string
    */
   send(string) {
-    this.ws.send(string)
+    this.ws.send(string);
   }
 }
 
-window['UWebSocket'] = UWebSocket
+window["UWebSocket"] = UWebSocket;
