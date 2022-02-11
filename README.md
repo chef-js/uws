@@ -96,7 +96,7 @@ at the **same port** as the **files server** too. **One** client may be in **man
 ## API
 
 - a plugin is a function `(ws, { id, event, data })` that is called **each time** the frontend websocket emits to server
-- context (`this`) of each plugin is the `bouncer` instance.
+- context (`this`) of each plugin is the `server` instance.
 - plugins receive (and send) the data in the format of:
 
 ```ts
