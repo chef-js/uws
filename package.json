@@ -1,6 +1,6 @@
 {
   "name": "chef-uws",
-  "version": "1.0.24",
+  "version": "1.0.25",
   "description": "chef-js + uWebSockets.js = static files server + websockets",
   "main": "index.js",
   "types": "./dist/index.d.ts",
@@ -17,6 +17,7 @@
     "spa"
   ],
   "scripts": {
+    "prebuild": "rm -rf dist",
     "build": "tsc",
     "test": "jest",
     "start": "bin/chef-uws demo --plugin node_modules/chef-core/chat.js",
@@ -25,15 +26,14 @@
   "files": [
     "dist",
     "demo",
-    "bin",
-    "ssl"
+    "bin"
   ],
   "repository": "git://github.com/chef-js/uws.git",
   "author": "Jacek Pietal <Prozi>",
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "chef-core": "^1.0.5",
+    "chef-core": "^1.0.7",
     "mime-types": "^2.1.34",
     "uWebSockets.js": "github:uNetworking/uWebSockets.js#v20.6.0"
   },
