@@ -12,9 +12,16 @@
     "server",
     "static-serve",
     "http-server",
+    "https-server",
+    "nodejs-server",
+    "spa",
+    "nodejs",
+    "javascript",
+    "cli",
+    "typescript",
+    "uws",
     "microwebsockets",
-    "websockets",
-    "spa"
+    "websockets"
   ],
   "scripts": {
     "prebuild": "rm -rf dist",
