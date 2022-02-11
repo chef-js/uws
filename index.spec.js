@@ -29,7 +29,10 @@ describe("GIVEN chef is provided", () => {
       const api = await startChef({
         type: "uws",
         debug: true,
-        ssl: { key: "ssl/example.key", cert: "ssl/example.crt" },
+        ssl: {
+          key: "node_modules/chef-core/ssl/example.key",
+          cert: "node_modules/chef-core/ssl/example.crt",
+        },
         folder: "demo",
         port: 3010,
       });
