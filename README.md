@@ -119,6 +119,10 @@ at the **same port** as the **files server** too. **One** client may be in **man
 const UWebSocket = require("chef-uws/client");
 ```
 
+```html
+<script src="https://unpkg.com/chef-uws@latest/client.js"></script>
+```
+
 it has the same API as `socket.io-client`
 
 ## License
