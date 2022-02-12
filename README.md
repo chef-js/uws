@@ -111,6 +111,16 @@ at the **same port** as the **files server** too. **One** client may be in **man
 }
 ```
 
+## Client
+
+`socket.io`-ish **websocket client** for `uWebSockets.js`:
+
+```ts
+const UWebSocket = require("chef-uws/client");
+```
+
+it has the same API as `socket.io-client`
+
 ## License
 
 MIT
