@@ -50,7 +50,6 @@
       });
 
       socket.onAny((event, id, data) => {
-        console.log(event, id, data);
         // append output
         const string = [id, event, data].filter(Boolean).join(" &gt; ");
 
