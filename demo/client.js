@@ -67,7 +67,9 @@ class UWebSocket {
    * @param {function} callback
    */
   set onmessage(callback) {
-    this.on(this.allKey, callback);
+    this.on(this.allKey, ({ id, event, data }) => {
+      callback(event, id, data);
+    });
   }
 
   /**
@@ -93,49 +95,61 @@ class UWebSocket {
     events.forEach((action) => action({ id: id || this.ws.id, event, data }));
   }
 
+  onAny(callback) {
+    return this.on(this.allKey, callback);
+  }
+
   /**
    * Adds one SocketIOLike.on("...", () => {}) callback
    * @param {string} target
    * @param {function} callback
    */
   on(name, callback) {
-    const done = ({ id, event, data }) => {
-      if ([event, this.allKey].includes(name)) {
-        callback({ id, event, data });
-      }
-    };
+    switch (name) {
+      case "connect":
+        this.onopen = callback;
+        break;
 
-    this.events[name] = this.events[name] || [];
-    this.events[name].push(done);
-  }
+      case "disconnect":
+        this.onclose = callback;
+        break;
 
-  /**
-   * Emits socket.io like object from ws
-   * @param {object|string} objectOrString
-   */
-  emit(objectOrString) {
-    this.send(
-      typeof objectOrString === "string"
-        ? objectOrString
-        : JSON.stringify(objectOrString)
-    );
+      default:
+        const done = ({ id, event, data }) => {
+          if ([event, this.allKey].includes(name)) {
+            callback(id, event, data);
+          }
+        };
+
+        this.events[name] = this.events[name] || [];
+        this.events[name].push(done);
+    }
   }
 
   /**
    * @param {string} event
    * @param {any} data
    */
-  emitEvent(event, data) {
-    this.emit({ event, data, id: this.id });
+  emit(event, data) {
+    this.send({ event, data, id: this.id });
   }
 
   /**
    * Sends string from ws
-   * @param {string} string
+   * @param {object|string} objectOrString
    */
-  send(string) {
-    this.ws.send(string);
+  send(objectOrString) {
+    const value =
+      typeof objectOrString === "string"
+        ? objectOrString
+        : JSON.stringify(objectOrString);
+
+    this.ws.send(value);
   }
 }
 
 window["UWebSocket"] = UWebSocket;
+
+if (typeof module !== "undefined") {
+  module.exports = UWebSocket;
+}

@@ -44,21 +44,24 @@
       const socket = new UWebSocket(location.origin.replace(/^http/, "ws"));
       const refs = getHTMLElements();
 
-      socket.on("/join", ({ id, event, data }) => {
+      socket.on("connect", () => {
+        // step 1 ~> 2 of flow - send handshake of plugin name
+        socket.emit("/join", "chat");
+      });
+
+      socket.onAny((event, id, data) => {
+        console.log(event, id, data);
+        // append output
+        const string = [id, event, data].filter(Boolean).join(" &gt; ");
+
+        refs.messages.innerHTML += `<div>${string}</div>\n`;
+      });
+
+      socket.on("/join", (id) => {
         // first join is your join, set your server named id
         if (!refs.username.innerText) {
           refs.username.innerText = id;
         }
-      });
-
-      socket.onopen = (value) => {
-        // step 1 ~> 2 of flow - send handshake of plugin name
-        socket.emitEvent("/join", "chat");
-      };
-
-      socket.on("*", ({ id, event, data }) => {
-        // append output
-        refs.messages.innerHTML += `<div>${id} &gt; ${event} &gt; ${data}</div>\n`;
       });
 
       refs.chat.addEventListener("submit", (event) => {
@@ -67,7 +70,7 @@
         const payload = refs.message.value.trim();
         if (!payload) return;
 
-        socket.emitEvent("say", payload);
+        socket.emit("say", payload);
 
         refs.message.value = "";
       });
