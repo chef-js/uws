@@ -120,7 +120,7 @@ const UWebSocket = require("chef-uws/client");
 ```
 
 ```html
-<script src="https://unpkg.com/chef-uws@latest/client.js"></script>
+<script src="https://unpkg.com/chef-uws@1.0.30/client.js"></script>
 ```
 
 it has the same API as `socket.io-client`
