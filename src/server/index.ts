@@ -50,6 +50,8 @@ export async function createServer(config: WSConfig): Promise<WSServer> {
 
           plugin?.call(api, ws, leaveEvent);
         });
+
+        topicsMap.delete(ws.id);
       },
       message: (
         ws: uWebSockets.WebSocket,

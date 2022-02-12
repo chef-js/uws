@@ -115,12 +115,37 @@ at the **same port** as the **files server** too. **One** client may be in **man
 
 front-end **websocket client** for `uWebSockets.js` with same API as `socket.io-client`:
 
-```ts
-const UWebSocket = require("chef-uws/client");
-```
-
 ```html
 <script src="https://unpkg.com/chef-uws@latest/client.js"></script>
+```
+
+you can use it like this:
+
+```ts
+const UWebSocket = require("chef-uws/client");
+// will connect to ws:// or wss:// protocol depending on ssl enabled or not
+const ws = new UWebSocket(location.origin.replace(/^http/, "ws"));
+
+ws.on("connect", () => {
+  // after connect, join a plugin (chat) - emit "/join" event with data = "chat"
+  ws.emit("/join", "chat");
+});
+ws.on("disconnect", () => {
+  // your socket got disconnected
+});
+ws.on("/join", (id: string, event: string, data?: any) => {
+  // socket with id joined plugin, first join sets your socket's id
+  ws.id = ws.id || id;
+});
+ws.on("/leave", (id: string, event: string, data?: any) => {
+  // socket with id left plugin
+});
+ws.on("example", (id: string, event: string, data?: any) => {
+  // handle event with "example" name
+});
+ws.onAny((id: string, event: string, data?: any) => {
+  // handle all incoming messsages
+});
 ```
 
 ## License

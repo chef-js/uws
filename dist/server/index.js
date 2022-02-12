@@ -38,6 +38,7 @@ async function createServer(config) {
           const plugin = (0, plugins_1.getPlugin)(config, topic);
           plugin?.call(api, ws, leaveEvent);
         });
+        topicsMap.delete(ws.id);
       },
       message: (ws, message, _isBinary) => {
         // microwebsockets dont have default ids

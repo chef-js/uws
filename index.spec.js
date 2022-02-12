@@ -55,7 +55,7 @@ describe("GIVEN chef is provided", () => {
     });
   });
 
-  describe("WHEN chef.serve is run on demo folder", () => {
+  describe("WHEN chef is run on demo folder", () => {
     it("THEN it should not throw error", async () => {
       const startChef = require(".");
       const test = async () =>
