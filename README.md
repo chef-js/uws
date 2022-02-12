@@ -113,7 +113,7 @@ at the **same port** as the **files server** too. **One** client may be in **man
 
 ## Client
 
-`socket.io`-ish **websocket client** for `uWebSockets.js`:
+front-end **websocket client** for `uWebSockets.js` with same API as `socket.io-client`:
 
 ```ts
 const UWebSocket = require("chef-uws/client");
@@ -122,8 +122,6 @@ const UWebSocket = require("chef-uws/client");
 ```html
 <script src="https://unpkg.com/chef-uws@1.0.30/client.js"></script>
 ```
-
-it has the same API as `socket.io-client`
 
 ## License
 
