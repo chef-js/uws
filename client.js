@@ -67,9 +67,7 @@ class UWebSocket {
    * @param {function} callback
    */
   set onmessage(callback) {
-    this.on(this.allKey, ({ id, event, data }) => {
-      callback(event, id, data);
-    });
+    this.on(this.allKey, callback);
   }
 
   /**
