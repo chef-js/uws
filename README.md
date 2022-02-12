@@ -52,7 +52,7 @@ startServer({
 ```
 
 - `PORT=4200` - choose server port
-- `folder` - folder you want to server static files from
+- `folder` - folder you want to serve static files from
 - `--ssl` - start as https server, with self signed certificate
 - `--key example.key` - path to real certificate key, use with `--ssl`
 - `--cert example.crt` - path to real certificate, use with `--ssl`
