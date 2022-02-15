@@ -9,15 +9,30 @@ class UWebSocket {
    * @param {string} serverUrl
    * @returns {WebSocket | SocketIOClient}
    */
-  constructor(serverUrl) {
+  constructor(serverUrl = window.location.origin.replace(/^http/, "ws")) {
     this.allKey = "*";
     this.events = {
       [this.allKey]: [],
     };
 
     this.ws = new WebSocket(serverUrl);
-    this.ws.onmessage = (message) => {
-      this.uwsOnMessage(message);
+    this.ws.onmessage = ({ data: socketMessage }) => {
+      const message =
+        typeof socketMessage === "string"
+          ? JSON.parse(socketMessage)
+          : socketMessage;
+      const { id: socketId, event, data } = message;
+
+      const id = socketId || this.ws.id;
+      const callbacks = this.events[event];
+
+      if (callbacks) {
+        callbacks.forEach((callback) => callback({ id, event, data }));
+      }
+
+      this.events[this.allKey].forEach((callback) =>
+        callback({ id, event, data })
+      );
     };
 
     Object.freeze(this.ws.onmessage);
@@ -78,22 +93,6 @@ class UWebSocket {
   }
 
   /**
-   * Internal function for on("...", () => {}) callback
-   * @param {object} data
-   */
-  uwsOnMessage({ data: message }) {
-    const { id, event, data } =
-      typeof message === "string" ? JSON.parse(message) : message;
-
-    const events = [
-      ...(this.events[event] || []),
-      ...(this.events[this.allKey] || []),
-    ];
-
-    events.forEach((action) => action({ id: id || this.ws.id, event, data }));
-  }
-
-  /**
    * onAny((id, event, data) => {})
    * @param {function} callback
    */
@@ -150,7 +149,9 @@ class UWebSocket {
   }
 }
 
-window["UWebSocket"] = UWebSocket;
+if (typeof window !== "undefined") {
+  window["UWebSocket"] = UWebSocket;
+}
 
 if (typeof module !== "undefined") {
   module.exports = UWebSocket;
