@@ -117,21 +117,26 @@ describe("GIVEN chef is provided", () => {
           // after connect, join a plugin (chat) - emit "/join" event with data = "chat"
           ws.emit(config.join, "chat");
         });
+
         ws.on("disconnect", () => {
           // your socket got disconnected
           done();
         });
+
         ws.on(config.join, (id, event, data) => {
           // socket with id joined plugin, first join sets your socket's id
           ws.id = ws.id || id;
 
           expect(data).toBe("chat");
         });
+
         ws.on(config.leave, (id, event, data) => {
           // socket with id left plugin
           ws.close();
         });
+
         ws.on("example", example);
+
         ws.onAny((id, event, data) => {
           // handle all incoming messsages
           console.log({ id, event, data });

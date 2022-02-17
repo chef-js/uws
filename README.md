@@ -133,17 +133,17 @@ ws.on("connect", () => {
 ws.on("disconnect", () => {
   // your socket got disconnected
 });
-ws.on("/join", (data, id) => {
+ws.on("/join", (id, event, data) => {
   // socket with id joined plugin, first join sets your socket's id
   ws.id = ws.id || id;
 });
-ws.on("/leave", (data, id) => {
+ws.on("/leave", (id, event, data) => {
   // socket with id left plugin
 });
-ws.on("example", (data, id) => {
+ws.on("example", (id, event, data) => {
   // handle event with "example" name
 });
-ws.onAny((data, event, id) => {
+ws.onAny((id, event, data) => {
   // handle all incoming messsages
 });
 ```
