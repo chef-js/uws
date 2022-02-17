@@ -93,29 +93,64 @@ describe("GIVEN chef is provided", () => {
         folder: "demo",
         port: 4200,
         plugins: {
-          chat: function () {
-            done();
+          chat: function (ws, { id, event, data }) {
+            try {
+              // echo back
+              ws.send(JSON.stringify({ event, id, data }));
+
+              // emit example
+              ws.send(JSON.stringify({ event: "example", id: "server" }));
+
+              // and leave
+              ws.send(JSON.stringify({ event: config.leave }));
+            } catch (err) {}
           },
         },
-      }).then(() => {
+      }).then(({ config }) => {
         const WebSocket = require("ws");
-        const socket = new WebSocket("ws://localhost:4200", {
-          protocol: "websockets",
+        global.window = { WebSocket };
+
+        const UWebSocket = require("./client");
+        const ws = new UWebSocket("ws://localhost:4200");
+
+        ws.on("connect", () => {
+          // after connect, join a plugin (chat) - emit "/join" event with data = "chat"
+          ws.emit(config.join, "chat");
+        });
+        ws.on("disconnect", () => {
+          // your socket got disconnected
+          done();
+        });
+        ws.on(config.join, (id, event, data) => {
+          // socket with id joined plugin, first join sets your socket's id
+          ws.id = ws.id || id;
+
+          expect(data).toBe("chat");
+        });
+        ws.on(config.leave, (id, event, data) => {
+          // socket with id left plugin
+          ws.close();
+        });
+        ws.on("example", example);
+        ws.onAny((id, event, data) => {
+          // handle all incoming messsages
+          console.log({ id, event, data });
         });
 
-        socket.onmessage = ({ data: message }) => {
-          const { id, event, data } = JSON.parse(message);
+        function example(id, event, data) {
+          // handle event with "example" name
+          expect(event).toBe("example");
+          expect(data).toBe(undefined);
+          expect(id).toBe("server");
 
-          expect(data).toBeTruthy();
-          expect(id).toBeTruthy();
-          expect(event).toBe(config.join);
+          expect(ws.events.example.length).toBe(1);
 
-          socket.close();
-        };
+          ws.off("example", example);
 
-        socket.onopen = () => {
-          socket.send(JSON.stringify({ event: config.join, data: "chat" }));
-        };
+          expect(ws.events.example.length).toBe(0);
+
+          ws.close();
+        }
       });
     });
   });

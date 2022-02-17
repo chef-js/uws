@@ -27,11 +27,13 @@ class UWebSocket {
       const callbacks = this.events[event];
 
       if (callbacks) {
-        callbacks.forEach((callback) => callback({ id, event, data }));
+        callbacks.forEach((callback) =>
+          callback.call(this.ws, id, event, data)
+        );
       }
 
       this.events[this.allKey].forEach((callback) =>
-        callback({ id, event, data })
+        callback.call(this.ws, id, event, data)
       );
     };
 
@@ -58,7 +60,7 @@ class UWebSocket {
    * @param {function} callback
    */
   set onopen(callback) {
-    this.ws.onopen = callback;
+    return this.on("connect", callback);
   }
 
   /**
@@ -66,7 +68,7 @@ class UWebSocket {
    * @param {function} callback
    */
   set onclose(callback) {
-    this.ws.onclose = callback;
+    return this.on("disconnect", callback);
   }
 
   /**
@@ -82,7 +84,7 @@ class UWebSocket {
    * @param {function} callback
    */
   set onmessage(callback) {
-    this.on(this.allKey, callback);
+    return this.onAny(callback);
   }
 
   /**
@@ -108,23 +110,49 @@ class UWebSocket {
   on(name, callback) {
     switch (name) {
       case "connect":
-        this.onopen = callback;
+        this.ws.onopen = callback.bind(this.ws);
         break;
 
       case "disconnect":
-        this.onclose = callback;
+        this.ws.onclose = callback.bind(this.ws);
+        break;
+
+      case this.allKey:
+        this.events[this.allKey].push(callback);
         break;
 
       default:
-        const done = ({ id, event, data }) => {
-          if ([event, this.allKey].includes(name)) {
-            callback(id, event, data);
-          }
-        };
+        if (!this.events[name]) {
+          this.events[name] = [];
+        }
 
-        this.events[name] = this.events[name] || [];
-        this.events[name].push(done);
+        this.events[name].push(callback);
+        break;
     }
+  }
+
+  /**
+   * remove callback on event
+   * @param {string} event
+   * @param {function} callback
+   * @returns {boolean}
+   */
+  off(event, callback) {
+    const events = this.events[event];
+
+    if (!events) {
+      return false;
+    }
+
+    const index = events.indexOf(callback);
+
+    if (index !== -1) {
+      events.splice(index, 1);
+
+      return true;
+    }
+
+    return false;
   }
 
   /**
@@ -132,7 +160,7 @@ class UWebSocket {
    * @param {any} data
    */
   emit(event, data) {
-    this.send({ event, data, id: this.id });
+    this.send({ id: this.id, event, data });
   }
 
   /**
