@@ -86,7 +86,7 @@ describe("GIVEN chef is provided", () => {
   describe("WHEN chef is initialized with plugin", () => {
     it("THEN it should start without error", (done) => {
       const startChef = require(".");
-      const { default: config } = require("chef-core/dist/config");
+      const config = require("chef-core/config");
 
       startChef({
         type: "uws",
