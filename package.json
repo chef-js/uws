@@ -41,7 +41,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "chef-core": "^1.0.12",
+    "chef-core": "^1.0.13",
     "uWebSockets.js": "github:uNetworking/uWebSockets.js#v20.6.0"
   },
   "devDependencies": {
