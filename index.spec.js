@@ -1,5 +1,3 @@
-"use strict";
-
 describe("GIVEN chef is provided", () => {
   it("THEN requiring the library does not throw an error", () => {
     require(".");
