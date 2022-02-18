@@ -1,6 +1,6 @@
 {
   "name": "chef-uws",
-  "version": "1.0.40",
+  "version": "1.0.41",
   "description": "chef-js + uWebSockets.js = static files server + websockets",
   "main": "index.js",
   "types": "./dist/index.d.ts",
@@ -41,7 +41,7 @@
   "license": "MIT",
   "private": false,
   "dependencies": {
-    "chef-core": "^1.0.14",
+    "chef-core": "^1.0.15",
     "uWebSockets.js": "github:uNetworking/uWebSockets.js#v20.6.0"
   },
   "devDependencies": {
