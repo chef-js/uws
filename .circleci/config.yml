@@ -30,7 +30,7 @@ jobs:
       # test here to reuse all of above (same job)
       - checkout
       - run: yarn
-      - run: yarn test --forceExit
+      - run: yarn test
 workflows:
   version: 2
   test:
