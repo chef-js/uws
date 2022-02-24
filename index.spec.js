@@ -21,6 +21,17 @@ describe("GIVEN chef is provided", () => {
     });
   });
 
+  describe("WHEN it is started", () => {
+    it("THEN it should have some props of original server", () => {
+      const startChef = require(".");
+
+      expect(
+        () =>
+          startChef({ type: "uws", folder: "demo", port: 3012 }).__proto__.head
+      ).toBeTruthy();
+    });
+  });
+
   describe("WHEN chef is initialized in ssl mode", () => {
     it("THEN it should not throw error", async () => {
       const startChef = require(".");
