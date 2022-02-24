@@ -13,7 +13,7 @@ const plugins_1 = require("chef-core/dist/plugins");
 const topicsMap = new Map();
 async function createServer(config) {
   const server = createUWSServer(config);
-  // forwarding api
+  // common `this.to(topic).emit(event, id, data)` api
   const api = {
     to: (topic) => ({
       emit: (event, id, data) => {
@@ -66,29 +66,18 @@ async function createServer(config) {
       },
     });
   }
-  // WSGet compatible, this = method: string
-  function createReader(path, wsGet) {
-    const action = server[this.toLowerCase()];
-    if (action) {
-      action.call(server, path, (res, req, next) => wsGet(res, req, next));
-    }
-  }
-  return {
-    async listen(port) {
-      return new Promise((resolve) => {
-        // ensure port is number
-        server.listen(+port, resolve);
-      });
-    },
-    get: createReader.bind("GET"),
-    post: createReader.bind("POST"),
-    any: createReader.bind("ANY"),
+  server.start = function (port) {
+    return new Promise((resolve) => {
+      // ensure port is number
+      server.listen(+port, resolve);
+    });
   };
+  return server;
 }
 exports.createServer = createServer;
 function createUWSServer(config = {}) {
   // spread ssl from config
-  const { ssl, ...appOptions } = config;
+  const { ssl } = config;
   // if config key and cert present
   if (ssl?.key && ssl?.cert) {
     // start ssl app and finish
@@ -96,12 +85,10 @@ function createUWSServer(config = {}) {
       // change ssl params format to uWebSockets compatible
       key_file_name: ssl.key,
       cert_file_name: ssl.cert,
-      // rest of app options
-      ...appOptions,
     });
   }
   // else start normal app
-  return uWebSockets_js_1.default.App(appOptions);
+  return uWebSockets_js_1.default.App();
 }
 function getMessage(message) {
   return typeof message === "string"

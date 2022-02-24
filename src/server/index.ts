@@ -3,23 +3,17 @@ import Cache from "chef-core/dist/cache";
 import config from "chef-core/dist/config";
 import getUrl from "chef-core/dist/server/get-url";
 import { getPlugin } from "chef-core/dist/plugins";
-import {
-  WSConfig,
-  WSEvent,
-  WSGet,
-  WSPlugin,
-  WSServer,
-} from "chef-core/dist/types";
+import { WSConfig, WSEvent, WSPlugin, WSServer } from "chef-core/dist/types";
 
 const topicsMap: Map<string, string[]> = new Map();
 
 export async function createServer(config: WSConfig): Promise<WSServer> {
-  const server: any = createUWSServer(config);
+  const server: Partial<WSServer> = createUWSServer(config);
 
-  // forwarding api
+  // common `this.to(topic).emit(event, id, data)` api
   const api: object = {
     to: (topic: string) => ({
-      emit: (event: string, id: string, data: any) => {
+      emit: (event: string, id: string, data?: any) => {
         server.publish(topic, JSON.stringify({ event, id, data }));
       },
     }),
@@ -92,39 +86,21 @@ export async function createServer(config: WSConfig): Promise<WSServer> {
     });
   }
 
-  // WSGet compatible, this = method: string
-  function createReader(path: string, wsGet: WSGet): void {
-    const action = server[this.toLowerCase()];
-
-    if (action) {
-      action.call(
-        server,
-        path,
-        (
-          res: uWebSockets.HttpResponse,
-          req: uWebSockets.HttpRequest,
-          next: any
-        ) => wsGet(res, req, next)
-      );
-    }
-  }
-
-  return {
-    async listen(port: number): Promise<any> {
-      return new Promise((resolve) => {
-        // ensure port is number
-        server.listen(+port, resolve);
-      });
-    },
-    get: createReader.bind("GET"),
-    post: createReader.bind("POST"),
-    any: createReader.bind("ANY"),
+  server.start = function (port: number) {
+    return new Promise((resolve) => {
+      // ensure port is number
+      server.listen(+port, resolve);
+    });
   };
+
+  return server as WSServer;
 }
 
-function createUWSServer(config: any = {}): any {
+function createUWSServer(
+  config: Partial<WSConfig> = {}
+): uWebSockets.TemplatedApp {
   // spread ssl from config
-  const { ssl, ...appOptions } = config;
+  const { ssl } = config;
 
   // if config key and cert present
   if (ssl?.key && ssl?.cert) {
@@ -133,13 +109,11 @@ function createUWSServer(config: any = {}): any {
       // change ssl params format to uWebSockets compatible
       key_file_name: ssl.key,
       cert_file_name: ssl.cert,
-      // rest of app options
-      ...appOptions,
     });
   }
 
   // else start normal app
-  return uWebSockets.App(appOptions);
+  return uWebSockets.App();
 }
 
 function getMessage(message: ArrayBuffer | string): string {
@@ -149,7 +123,7 @@ function getMessage(message: ArrayBuffer | string): string {
 }
 
 export function requestHandler(fileReaderCache: Cache) {
-  return (res: any, req: any) => {
+  return (res: uWebSockets.HttpResponse, req: uWebSockets.HttpRequest) => {
     const url: string = getUrl(req.getUrl());
     const { status, mime, body } = fileReaderCache.get(url);
 

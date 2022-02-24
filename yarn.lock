@@ -579,10 +579,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.17.tgz#a8ddf6e0c2341718d74ee3dc413a13a042c45a0c"
   integrity sha512-e8PUNQy1HgJGV3iU/Bp2+D/DXh3PYeyli8LgIwsQcs1Ar1LoaWHSIT6Rw+H2rNJmiq6SNWiDytfx8+gYj7wDHw==
 
-"@types/node@^17.0.18":
-  version "17.0.18"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.18.tgz#3b4fed5cfb58010e3a2be4b6e74615e4847f1074"
-  integrity sha512-eKj4f/BsN/qcculZiRSujogjvp5O/k4lOW5m35NopjZM/QwLOR075a8pJW5hD+Rtdm2DaCVPENS6KtSQnUD6BA==
+"@types/node@^17.0.21":
+  version "17.0.21"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-17.0.21.tgz#864b987c0c68d07b4345845c3e63b75edd143644"
+  integrity sha512-DBZCJbhII3r90XbQxI8Y9IjjiiOGlZ0Hr32omXIZvwwZ7p4DMMXGrKXVyPfuoBOri9XNtL0UK69jYIBIsRX3QQ==
 
 "@types/prettier@^2.1.5":
   version "2.4.4"
@@ -843,10 +843,10 @@ char-regex@^1.0.2:
   resolved "https://registry.yarnpkg.com/char-regex/-/char-regex-1.0.2.tgz#d744358226217f981ed58f479b1d6bcc29545dcf"
   integrity sha512-kWWXztvZ5SBQV+eRgKFeh8q5sLuZY2+8WUIzlxWVTg+oGwY14qylx1KbKzHd8P6ZYkAg0xyIDU9JMHhyJMZ1jw==
 
-chef-core@^1.0.15:
-  version "1.0.15"
-  resolved "https://registry.yarnpkg.com/chef-core/-/chef-core-1.0.15.tgz#b7d2228035e393708621c5c36b5006cb0e6e8aa2"
-  integrity sha512-dsYZP+31eqcCI0/W3VN+Z+/w57on6WpfmfM5cR8q1q+JsSfPmCggKufvb1uwLC9Qa7guAx2lCRSywL7I9N2oJw==
+chef-core@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/chef-core/-/chef-core-1.1.0.tgz#c618c3b12ea4ab764735082b237e02e27bd4cac5"
+  integrity sha512-KcGV0oJDczhTd5iQFy5aavQNuSdTNgATPTV8nrx36HXMMRECP4KOFz5xab5kFs8/FYd9LPT/GlajXTjOpSLosQ==
   dependencies:
     mime-types "^2.1.34"
 

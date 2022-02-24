@@ -22,7 +22,7 @@ $ yarn chef-uws node_modules/chef-uws/demo --plugin node_modules/chef-core/chat.
 ## Running
 
 ```bash
-$ [PORT=4200] yarn chef-uws folder [--debug] [--ssl] [--key example.key] [--cert example.crt] [--plugin path/to/file.js]
+$ [PORT=4200] [yarn|npx] chef-uws folder [--debug] [--ssl] [--key example.key] [--cert example.crt] [--plugin path/to/file.js]
 ```
 
 ```ts
@@ -39,13 +39,13 @@ startServer({
   join: "/join",
   // disconnect from room event
   leave: "/leave",
-  // folder to static server files
+  // folder to static serve files
   folder: process.argv[2],
   // ssl = undefined | { key, cert }
   ssl: process.argv.includes("--ssl") ? ssl : undefined,
-}).then((server) => {
+}).then((server: uWS.App | uWS.SSLApp) => {
   // server api is get, post, any
-  server.any("/*", (res, req) => {
+  server.any("/*", (res: uWS.HttpResponse, req: uWS:HttpRequest) => {
     res.end("200 OK");
   });
 });
