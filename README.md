@@ -45,7 +45,7 @@ startServer({
   ssl: process.argv.includes("--ssl") ? ssl : undefined,
 }).then((server: uWS.App | uWS.SSLApp) => {
   // server api is get, post, any
-  server.any("/*", (res: uWS.HttpResponse, req: uWS:HttpRequest) => {
+  server.any("/*", (res: uWS.HttpResponse, req: uWS.HttpRequest) => {
     res.end("200 OK");
   });
 });
