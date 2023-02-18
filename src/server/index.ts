@@ -1,9 +1,15 @@
 import uWebSockets from "uWebSockets.js";
-import Cache from "chef-core/dist/cache";
+import { Cache } from "latermom";
 import config from "chef-core/dist/config";
 import getUrl from "chef-core/dist/server/get-url";
 import { getPlugin } from "chef-core/dist/plugins";
-import { WSConfig, WSEvent, WSPlugin, WSServer } from "chef-core/dist/types";
+import {
+  WSConfig,
+  WSEvent,
+  WSFileReaderResponse,
+  WSPlugin,
+  WSServer,
+} from "chef-core/dist/types";
 
 const topicsMap: Map<string, string[]> = new Map();
 
@@ -22,7 +28,7 @@ export async function createServer(config: WSConfig): Promise<WSServer> {
   if (Object.keys(config.plugins).length) {
     server.ws("/*", {
       close(
-        ws: uWebSockets.WebSocket,
+        ws: uWebSockets.WebSocket<{}> & { id: string },
         _code: number,
         _message: ArrayBuffer | string
       ) {
@@ -48,7 +54,7 @@ export async function createServer(config: WSConfig): Promise<WSServer> {
         topicsMap.delete(ws.id);
       },
       message: (
-        ws: uWebSockets.WebSocket,
+        ws: uWebSockets.WebSocket<{}> & { id: string },
         message: ArrayBuffer | string,
         _isBinary: boolean
       ) => {
@@ -122,7 +128,7 @@ function getMessage(message: ArrayBuffer | string): string {
     : Buffer.from(message).toString();
 }
 
-export function requestHandler(fileReaderCache: Cache) {
+export function requestHandler(fileReaderCache: Cache<WSFileReaderResponse>) {
   return (res: uWebSockets.HttpResponse, req: uWebSockets.HttpRequest) => {
     const url: string = getUrl(req.getUrl());
     const { status, mime, body } = fileReaderCache.get(url);
