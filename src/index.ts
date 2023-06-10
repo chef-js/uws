@@ -1,4 +1,4 @@
-import chef from "chef-core";
+import { chef } from "chef-core";
 import { WSConfig } from "chef-core/dist/types";
 import { createServer, requestHandler } from "./server";
 
