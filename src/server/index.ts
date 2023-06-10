@@ -1,15 +1,15 @@
 import uWebSockets from "uWebSockets.js";
 import { Cache } from "latermom";
-import config from "chef-core/dist/config";
-import getUrl from "chef-core/dist/server/get-url";
-import { getPlugin } from "chef-core/dist/plugins";
+import { debug } from "chef-core/config";
 import {
   WSConfig,
-  WSEvent,
-  WSFileReaderResponse,
-  WSPlugin,
   WSServer,
-} from "chef-core/dist/types";
+  WSEvent,
+  WSPlugin,
+  WSFileReaderResponse,
+  getPlugin,
+  getUrl,
+} from "chef-core";
 
 const topicsMap: Map<string, string[]> = new Map();
 
@@ -133,7 +133,7 @@ export function requestHandler(fileReaderCache: Cache<WSFileReaderResponse>) {
     const url: string = getUrl(req.getUrl());
     const { status, mime, body } = fileReaderCache.get(url);
 
-    if (config.debug) {
+    if (debug) {
       console.info(status, mime, url);
     }
 

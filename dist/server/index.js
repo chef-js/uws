@@ -7,9 +7,8 @@ var __importDefault =
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.requestHandler = exports.createServer = void 0;
 const uWebSockets_js_1 = __importDefault(require("uWebSockets.js"));
-const config_1 = __importDefault(require("chef-core/dist/config"));
-const get_url_1 = __importDefault(require("chef-core/dist/server/get-url"));
-const plugins_1 = require("chef-core/dist/plugins");
+const config_1 = require("chef-core/config");
+const chef_core_1 = require("chef-core");
 const topicsMap = new Map();
 async function createServer(config) {
   const server = createUWSServer(config);
@@ -35,7 +34,7 @@ async function createServer(config) {
             console.info(leaveEvent);
           }
           // handle leave event in plugins
-          const plugin = (0, plugins_1.getPlugin)(config, topic);
+          const plugin = (0, chef_core_1.getPlugin)(config, topic);
           plugin?.call(api, ws, leaveEvent);
         });
         topicsMap.delete(ws.id);
@@ -52,7 +51,7 @@ async function createServer(config) {
         // handle join
         if (event === config.join) {
           const topic = data;
-          const plugin = (0, plugins_1.getPlugin)(config, topic);
+          const plugin = (0, chef_core_1.getPlugin)(config, topic);
           if (plugin) {
             const topics = [...(topicsMap.get(ws.id) || []), topic];
             topicsMap.set(ws.id, topics);
@@ -60,7 +59,7 @@ async function createServer(config) {
           }
         }
         ws.getTopics().forEach((topic) => {
-          const plugin = (0, plugins_1.getPlugin)(config, topic);
+          const plugin = (0, chef_core_1.getPlugin)(config, topic);
           plugin?.call(api, ws, { event, id: id || ws.id, data });
         });
       },
@@ -97,9 +96,9 @@ function getMessage(message) {
 }
 function requestHandler(fileReaderCache) {
   return (res, req) => {
-    const url = (0, get_url_1.default)(req.getUrl());
+    const url = (0, chef_core_1.getUrl)(req.getUrl());
     const { status, mime, body } = fileReaderCache.get(url);
-    if (config_1.default.debug) {
+    if (config_1.debug) {
       console.info(status, mime, url);
     }
     // set content type by write header

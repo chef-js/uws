@@ -1,10 +1,9 @@
-import { chef } from "chef-core";
-import { WSConfig } from "chef-core/dist/types";
+import { chef, WSConfig } from "chef-core";
 import { createServer, requestHandler } from "./server";
 
-export default async function startChef(userConfig?: Partial<WSConfig>) {
+export default async function startChef(config?: Partial<WSConfig>) {
   return await chef(
-    { ...userConfig, type: "uws" },
+    { ...config, type: "uws" },
     { createServer, requestHandler }
   );
 }
