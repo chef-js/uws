@@ -1,6 +1,6 @@
 # chef-uws
 
-<img style="max-width: 100%;" src="https://raw.githubusercontent.com/chef-js/express/main/chef.png" width="150" />
+<img style="max-width: 100%; float: right;" src="https://raw.githubusercontent.com/chef-js/core/main/chef.svg" alt="kisscc0" width="200" height="200" />
 
 <a href="https://badge.fury.io/js/chef-uws"><img src="https://badge.fury.io/js/chef-uws.svg" alt="npm package version" /></a> <a href="https://circleci.com/gh/chef-js/uws"><img src="https://circleci.com/gh/chef-js/uws.svg?style=shield" alt="tests status" /></a>
 
@@ -28,22 +28,10 @@ $ [PORT=4200] [yarn|npx] chef-uws folder [--debug] [--ssl] [--key example.key] [
 ```ts
 const startServer = require("chef-uws");
 
-startServer({
-  // this enables http/ws logs
-  debug: process.argv.includes("--debug"),
-  // port on which the server listens
-  port: Number(process.env.PORT || 4200),
-  // you can use --plugin ./path/to/plugin.js any number of times
-  plugins: {},
-  // handshake event
-  join: "/join",
-  // disconnect from room event
-  leave: "/leave",
-  // folder to static serve files
-  folder: process.argv[2],
-  // ssl = undefined | { key, cert }
-  ssl: process.argv.includes("--ssl") ? ssl : undefined,
-}).then((server: uWS.App | uWS.SSLApp) => {
+// see https://github.com/chef-js/core#configuration
+const config = {};
+
+startServer(config).then((server: uWS.App | uWS.SSLApp) => {
   // server api is get, post, any
   server.any("/*", (res: uWS.HttpResponse, req: uWS.HttpRequest) => {
     res.end("200 OK");
