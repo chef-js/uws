@@ -10,6 +10,18 @@ designed for **node** written in **typescript**, with **tests**
 
 - `uWebSockets.js` for serving files and websockets
 
+## Command-Line Running
+
+```bash
+$ npx chef-uws folder [--debug] [--ssl] [--port 443] [--plugin path/to/plugin.js]
+```
+
+## Installation
+
+```bash
+$ yarn add chef-uws
+```
+
 ## Minimal Chat Demo
 
 https://chef-js-uws.herokuapp.com/
@@ -19,17 +31,11 @@ $ yarn add chef-uws
 $ yarn chef-uws node_modules/chef-uws/demo --plugin node_modules/chef-core/chat.js
 ```
 
-## Running
-
-```bash
-$ [PORT=4200] [yarn|npx] chef-uws folder [--debug] [--ssl] [--key example.key] [--cert example.crt] [--plugin path/to/file.js]
-```
+Minimal configuration is specifying folder, then it serves it from http://localhost:4200
 
 ```ts
 const startServer = require("chef-uws");
-
-// see https://github.com/chef-js/core#configuration
-const config = {};
+const config = { folder: "docs" };
 
 startServer(config).then((server: uWS.App | uWS.SSLApp) => {
   // server api is get, post, any
@@ -39,19 +45,13 @@ startServer(config).then((server: uWS.App | uWS.SSLApp) => {
 });
 ```
 
-- `PORT=4200` - choose server port
-- `folder` - folder you want to serve static files from
-- `--ssl` - start as https server, with self signed certificate
-- `--key example.key` - path to real certificate key, use with `--ssl`
-- `--cert example.crt` - path to real certificate, use with `--ssl`
-- `--debug` - show logs
-- `--plugin path/to/file.js` - path to `WSPlugin`, can use multiple times
+## Configuration
 
-## Install
+For more information about config parameters read:
 
-```bash
-$ yarn add chef-uws
-```
+- The default configuration https://github.com/chef-js/core#configuration
+
+- The parameters types https://chef-js.github.io/core/types/Config.html
 
 ## Plugins
 
