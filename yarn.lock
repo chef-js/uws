@@ -1076,10 +1076,10 @@ char-regex@^1.0.2:
   resolved "https://registry.yarnpkg.com/char-regex/-/char-regex-1.0.2.tgz#d744358226217f981ed58f479b1d6bcc29545dcf"
   integrity sha512-kWWXztvZ5SBQV+eRgKFeh8q5sLuZY2+8WUIzlxWVTg+oGwY14qylx1KbKzHd8P6ZYkAg0xyIDU9JMHhyJMZ1jw==
 
-chef-core@^3.0.3:
-  version "3.0.3"
-  resolved "https://registry.yarnpkg.com/chef-core/-/chef-core-3.0.3.tgz#ea8519bca67c375428d09dce704cc066e5f523c0"
-  integrity sha512-gXcxz+TKhvBNG5eOxpibqJ8VtnDlzMfOcbhxdDaJmvZLCunK49fE4E/RLmOMZSLsbBNbRQHkeqUNVMJ3MnT1ag==
+chef-core@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/chef-core/-/chef-core-3.0.4.tgz#ac125b7edb00fd2c9a614618868f5625e1b2dfbf"
+  integrity sha512-BMwvm8No9urODZb09KNRdFANzfUCKSHtakL6QB1e7FmiVJg6fmipX9iJ5kgO6WVYKSx/2+Un+os//x6DW5+8XQ==
   dependencies:
     latermom "^2.0.1"
     mime-types "^2.1.35"
