@@ -11,7 +11,7 @@ const config_1 = require("chef-core/config");
 const chef_core_1 = require("chef-core");
 const topicsMap = new Map();
 async function createServer(config) {
-  const server = createUWSServer(config);
+  const server = createUServer(config);
   // common `this.to(topic).emit(event, id, data)` api
   const api = {
     to: (topic) => ({
@@ -74,7 +74,7 @@ async function createServer(config) {
   return server;
 }
 exports.createServer = createServer;
-function createUWSServer(config = {}) {
+function createUServer(config = {}) {
   // spread ssl from config
   const { ssl } = config;
   // if config key and cert present

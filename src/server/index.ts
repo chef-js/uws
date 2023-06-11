@@ -2,22 +2,23 @@ import uWebSockets from "uWebSockets.js";
 import { Cache } from "latermom";
 import { debug } from "chef-core/config";
 import {
-  WSConfig,
-  WSServer,
-  WSEvent,
-  WSPlugin,
-  WSFileReaderResponse,
+  Config,
+  Server,
+  Event,
+  Plugin,
+  FileReaderResponse,
   getPlugin,
   getUrl,
+  ServerContext,
 } from "chef-core";
 
 const topicsMap: Map<string, string[]> = new Map();
 
-export async function createServer(config: WSConfig): Promise<WSServer> {
-  const server: Partial<WSServer> = createUWSServer(config);
+export async function createServer(config: Config): Promise<Server> {
+  const server: Partial<Server> = createUServer(config);
 
   // common `this.to(topic).emit(event, id, data)` api
-  const api: object = {
+  const api: ServerContext = {
     to: (topic: string) => ({
       emit: (event: string, id: string, data?: any) => {
         server.publish(topic, JSON.stringify({ event, id, data }));
@@ -35,7 +36,7 @@ export async function createServer(config: WSConfig): Promise<WSServer> {
         const topics: string[] = topicsMap.get(ws.id) || [];
 
         topics.forEach((topic: string) => {
-          const leaveEvent: WSEvent = {
+          const leaveEvent: Event = {
             event: config.leave,
             id: ws.id,
             data: topic,
@@ -46,7 +47,7 @@ export async function createServer(config: WSConfig): Promise<WSServer> {
           }
 
           // handle leave event in plugins
-          const plugin: WSPlugin | undefined = getPlugin(config, topic);
+          const plugin: Plugin | undefined = getPlugin(config, topic);
 
           plugin?.call(api, ws, leaveEvent);
         });
@@ -72,7 +73,7 @@ export async function createServer(config: WSConfig): Promise<WSServer> {
         // handle join
         if (event === config.join) {
           const topic: string = data;
-          const plugin: WSPlugin | undefined = getPlugin(config, topic);
+          const plugin: Plugin | undefined = getPlugin(config, topic);
 
           if (plugin) {
             const topics: string[] = [...(topicsMap.get(ws.id) || []), topic];
@@ -84,7 +85,7 @@ export async function createServer(config: WSConfig): Promise<WSServer> {
         }
 
         ws.getTopics().forEach((topic: string) => {
-          const plugin: WSPlugin | undefined = getPlugin(config, topic);
+          const plugin: Plugin | undefined = getPlugin(config, topic);
 
           plugin?.call(api, ws, { event, id: id || ws.id, data });
         });
@@ -99,12 +100,10 @@ export async function createServer(config: WSConfig): Promise<WSServer> {
     });
   };
 
-  return server as WSServer;
+  return server as Server;
 }
 
-function createUWSServer(
-  config: Partial<WSConfig> = {}
-): uWebSockets.TemplatedApp {
+function createUServer(config: Partial<Config> = {}): uWebSockets.TemplatedApp {
   // spread ssl from config
   const { ssl } = config;
 
@@ -128,7 +127,7 @@ function getMessage(message: ArrayBuffer | string): string {
     : Buffer.from(message).toString();
 }
 
-export function requestHandler(fileReaderCache: Cache<WSFileReaderResponse>) {
+export function requestHandler(fileReaderCache: Cache<FileReaderResponse>) {
   return (res: uWebSockets.HttpResponse, req: uWebSockets.HttpRequest) => {
     const url: string = getUrl(req.getUrl());
     const { status, mime, body } = fileReaderCache.get(url);

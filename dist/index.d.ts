@@ -1,5 +1,5 @@
-import { WSConfig } from "chef-core";
+import { Config } from "chef-core";
 export default function startChef(
-  config?: Partial<WSConfig>
-): Promise<import("chef-core").WSServer>;
+  config?: Partial<Config>
+): Promise<import("chef-core").Server>;
 //# sourceMappingURL=index.d.ts.map
