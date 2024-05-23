@@ -1,4 +1,4 @@
 #!/usr/bin/env node
-const startServer = require('../index.js');
+const startServer = require("../index.js");
 
 startServer();

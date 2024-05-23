@@ -1,5 +1,5 @@
 import uWebSockets from "uWebSockets.js";
-import { Cache } from "latermom";
+import { Cache } from "@pietal.dev/cache";
 import { debug } from "chef-core/config";
 import {
   Config,
@@ -31,7 +31,7 @@ export async function createServer(config: Config): Promise<Server> {
       close(
         ws: uWebSockets.WebSocket<{}> & { id: string },
         _code: number,
-        _message: ArrayBuffer | string
+        _message: ArrayBuffer | string,
       ) {
         const topics: string[] = topicsMap.get(ws.id) || [];
 
@@ -57,7 +57,7 @@ export async function createServer(config: Config): Promise<Server> {
       message: (
         ws: uWebSockets.WebSocket<{}> & { id: string },
         message: ArrayBuffer | string,
-        _isBinary: boolean
+        _isBinary: boolean,
       ) => {
         // microwebsockets dont have default ids
         if (!ws.id) {

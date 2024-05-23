@@ -28,12 +28,12 @@ class UWebSocket {
 
       if (callbacks) {
         callbacks.forEach((callback) =>
-          callback.call(this.ws, id, event, data)
+          callback.call(this.ws, id, event, data),
         );
       }
 
       this.events[this.allKey].forEach((callback) =>
-        callback.call(this.ws, id, event, data)
+        callback.call(this.ws, id, event, data),
       );
     };
 

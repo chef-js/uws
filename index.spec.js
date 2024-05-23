@@ -8,7 +8,7 @@ describe("GIVEN chef is provided", () => {
       const startChef = require(".");
 
       expect(() =>
-        startChef({ type: "uws", folder: "demo", port: 3001 })
+        startChef({ type: "uws", folder: "demo", port: 3001 }),
       ).not.toThrow();
     });
 
@@ -16,7 +16,7 @@ describe("GIVEN chef is provided", () => {
       const startChef = require(".");
 
       expect(
-        await startChef({ type: "uws", folder: "demo", port: 3002 })
+        await startChef({ type: "uws", folder: "demo", port: 3002 }),
       ).toBeTruthy();
     });
   });
@@ -27,7 +27,7 @@ describe("GIVEN chef is provided", () => {
 
       expect(
         () =>
-          startChef({ type: "uws", folder: "demo", port: 3012 }).__proto__.head
+          startChef({ type: "uws", folder: "demo", port: 3012 }).__proto__.head,
       ).toBeTruthy();
     });
   });

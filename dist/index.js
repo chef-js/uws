@@ -8,7 +8,7 @@ async function startChef(config) {
     {
       createServer: server_1.createServer,
       requestHandler: server_1.requestHandler,
-    }
+    },
   );
 }
 exports.default = startChef;
