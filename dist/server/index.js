@@ -5,10 +5,11 @@ var __importDefault =
     return mod && mod.__esModule ? mod : { default: mod };
   };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.requestHandler = exports.createServer = void 0;
-const uWebSockets_js_1 = __importDefault(require("uWebSockets.js"));
-const config_1 = require("chef-core/config");
+exports.createServer = createServer;
+exports.requestHandler = requestHandler;
 const chef_core_1 = require("chef-core");
+const config_1 = require("chef-core/config");
+const uWebSockets_js_1 = __importDefault(require("uWebSockets.js"));
 const topicsMap = new Map();
 async function createServer(config) {
   const server = createUServer(config);
@@ -73,7 +74,6 @@ async function createServer(config) {
   };
   return server;
 }
-exports.createServer = createServer;
 function createUServer(config = {}) {
   // spread ssl from config
   const { ssl } = config;
@@ -95,8 +95,12 @@ function getMessage(message) {
     : Buffer.from(message).toString();
 }
 function requestHandler(fileReaderCache) {
-  return (res, req) => {
+  return (res, req, next) => {
     const url = (0, chef_core_1.getUrl)(req.getUrl());
+    if (!url.match(new RegExp(`/${config_1.folder}/`))) {
+      next?.();
+      return false;
+    }
     const { status, mime, body } = fileReaderCache.get(url);
     if (config_1.debug) {
       console.info(status, mime, url);
@@ -106,6 +110,6 @@ function requestHandler(fileReaderCache) {
     // string status
     res.writeStatus(status.toString());
     res.end(body);
+    return true;
   };
 }
-exports.requestHandler = requestHandler;

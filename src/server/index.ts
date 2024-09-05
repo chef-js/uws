@@ -1,16 +1,17 @@
-import uWebSockets from "uWebSockets.js";
-import { Cache } from "@pietal.dev/cache";
-import { debug } from "chef-core/config";
 import {
   Config,
-  Server,
   Event,
-  Plugin,
   FileReaderResponse,
+  Plugin,
+  Server,
+  ServerContext,
   getPlugin,
   getUrl,
-  ServerContext,
 } from "chef-core";
+import { debug, folder } from "chef-core/config";
+
+import { Cache } from "@pietal.dev/cache";
+import uWebSockets from "uWebSockets.js";
 
 const topicsMap: Map<string, string[]> = new Map();
 
@@ -128,10 +129,19 @@ function getMessage(message: ArrayBuffer | string): string {
 }
 
 export function requestHandler(fileReaderCache: Cache<FileReaderResponse>) {
-  return (res: uWebSockets.HttpResponse, req: uWebSockets.HttpRequest) => {
+  return (
+    res: uWebSockets.HttpResponse,
+    req: uWebSockets.HttpRequest,
+    next?: () => void,
+  ) => {
     const url: string = getUrl(req.getUrl());
-    const { status, mime, body } = fileReaderCache.get(url);
+    if (!url.match(new RegExp(`/${folder}/`))) {
+      next?.();
 
+      return false;
+    }
+
+    const { status, mime, body } = fileReaderCache.get(url);
     if (debug) {
       console.info(status, mime, url);
     }
@@ -142,5 +152,6 @@ export function requestHandler(fileReaderCache: Cache<FileReaderResponse>) {
     res.writeStatus(status.toString());
 
     res.end(body);
+    return true;
   };
 }

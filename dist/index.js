@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = startChef;
 const chef_core_1 = require("chef-core");
 const server_1 = require("./server");
 async function startChef(config) {
@@ -11,4 +12,3 @@ async function startChef(config) {
     },
   );
 }
-exports.default = startChef;

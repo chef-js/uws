@@ -831,10 +831,10 @@ char-regex@^1.0.2:
   resolved "https://registry.yarnpkg.com/char-regex/-/char-regex-1.0.2.tgz#d744358226217f981ed58f479b1d6bcc29545dcf"
   integrity sha512-kWWXztvZ5SBQV+eRgKFeh8q5sLuZY2+8WUIzlxWVTg+oGwY14qylx1KbKzHd8P6ZYkAg0xyIDU9JMHhyJMZ1jw==
 
-chef-core@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/chef-core/-/chef-core-3.2.0.tgz#b0fb97840cadf53c5943334af9b1dcfc24d1cd75"
-  integrity sha512-tBV+cRC1ZqQeRcxb2yGxdXkxF+GcL9U6pc3EYAzcrA5DAq7jocOKiGEM9wBS3p5y6zVdUEADRHMvc6sfZzHZ0Q==
+chef-core@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/chef-core/-/chef-core-3.3.0.tgz#8cf9d72bab00cdb63dfa63d6ff0bacec34fc4248"
+  integrity sha512-6Zdb40iZam7mYEmIa78nkU9R9JLbUclJegS3KymoSbiJW92ChDHL3k1Kg/fNeFDfRkxH+AwADBFd/c+j8PmaYQ==
   dependencies:
     "@pietal.dev/cache" "^2.0.2"
     mime-types "^2.1.35"
